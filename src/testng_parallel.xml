@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Parallel Test Suite" thread-count="3" parallel="classes" >
+    <test name="Parallel Test Chrome" >
+        <classes>
+            <class name="tests.JobFindOnEpamTest"/>
+            <class name="tests.CourseRegistrationOnLearnTest"/>
+            <class name="tests.CourseRegistrationOnCampusTest"/>
+        </classes>
+    </test>
+</suite>
