@@ -88,4 +88,5 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 "Welcome to EPAM",
                 "Login page text mismatch");
     }
+
 }

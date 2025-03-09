@@ -79,5 +79,6 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
 
         softAssert.assertAll();
     }
+
 }
 

@@ -71,4 +71,5 @@ public class JobFindOnEpamTest extends BaseTest {
                 "Job location mismatch");
         softAssert.assertAll();
     }
+
 }
