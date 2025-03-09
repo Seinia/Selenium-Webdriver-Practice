@@ -21,15 +21,15 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
         learnHomePage = new LearnHomePage(driver).openPage().acceptCookie();
     }
 
-    @Test(description = "Test learn home page display")
-    public void testHomePageIsDisplayed() {
+    @Test(description = "Verify 'Learn' homepage elements are displayed")
+    public void testLearnHomePageIsDisplayed() {
         Assert.assertEquals(learnHomePage.getHomePageText(),
                 "Home",
                 "Learn home page text mismatch");
     }
 
-    @Test(description = "Test campus home page display")
-    public void testCampusNavigation() {
+    @Test(description = "Verify campus home page elements are displayed")
+    public void testCampusHomePageIsDisplayed() {
         campusHomePage = learnHomePage.clickCampusButton();
         learnHomePage.switchToNewTab();
         Assert.assertEquals(campusHomePage.getHomePageText(),
@@ -37,8 +37,8 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 "Campus page text mismatch");
     }
 
-    @Test(description = "Test campus training page display")
-    public void testFindAProgramNavigation() {
+    @Test(description = "Verify navigation on training page")
+    public void testTrainingPageNavigation() {
         campusHomePage = learnHomePage.clickCampusButton();
         learnHomePage.switchToNewTab();
         campusTrainingPage = campusHomePage
@@ -49,8 +49,8 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 "Campus training page text mismatch");
     }
 
-    @Test(description = "Test campus training page filters")
-    public void testFiltersOnCampusCoursePage() {
+    @Test(description = "Verify filters on campus training page")
+    public void testCampusTrainingPageFilters() {
         campusHomePage = learnHomePage.clickCampusButton();
         learnHomePage.switchToNewTab();
         campusTrainingPage = campusHomePage
@@ -68,7 +68,7 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 "Course card text mismatch");
     }
 
-    @Test(description = "Test registration for the course on campus portal")
+    @Test(description = "Verify JavaScript course registration process")
     public void testJavaScriptCourseRegistration() {
         campusHomePage = learnHomePage.clickCampusButton();
         learnHomePage.switchToNewTab();

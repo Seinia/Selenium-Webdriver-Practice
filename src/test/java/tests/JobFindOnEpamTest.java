@@ -22,15 +22,15 @@ public class JobFindOnEpamTest extends BaseTest {
         epamHomePage = new EpamHomePage(driver).openPage().acceptCookie();
     }
 
-    @Test(description = "Test epam home page display")
+    @Test(description = "Verify navigation on EPAM Careers homepage")
     public void testCareersNavigation() {
         epamCareersPage = epamHomePage.clickCareersButton();
         Assert.assertEquals(epamCareersPage.getEpamCareersPageText(), "Find Your Dream Job",
                 "Careers page text mismatch");
     }
 
-    @Test(description = "Test epam job list page filters")
-    public void testFiltersOnEpamJobListPage() {
+    @Test(description = "Verify job list page filters work correctly")
+    public void testJobListPageFilters() {
         epamCareersPage = epamHomePage.clickCareersButton();
         epamJobListPage = epamCareersPage
                 .clickFindButton()
@@ -47,8 +47,8 @@ public class JobFindOnEpamTest extends BaseTest {
                 "Job card title mismatch");
     }
 
-    @Test(description = "Test job application on epam careers portal")
-    public void testJobDetails() {
+    @Test(description = "Verify job application submission process")
+    public void testJobApplicationSubmission() {
         epamCareersPage = epamHomePage.clickCareersButton();
         epamJobListPage = epamCareersPage
                 .clickFindButton()
