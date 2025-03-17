@@ -74,7 +74,7 @@ public class EpamJobListPage extends BasePage {
                 .withMessage("Could not find an item in drop down")
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(StaleElementReferenceException.class)
-                .until(driver1 -> getTextFromElement(element).contains(text));
+                .until(driver -> getTextFromElement(element).contains(text));
     }
 
 }

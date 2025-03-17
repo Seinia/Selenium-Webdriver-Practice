@@ -1,24 +1,34 @@
 package tests.base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Parameters;
+import util.DriverFactory;
+import util.TestListener;
 
+@Listeners(TestListener.class)
 public abstract class BaseTest {
 
     protected WebDriver driver;
+    private static final Logger logger = LogManager.getLogger(BaseTest.class);
 
     @BeforeMethod
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+    @Parameters({"browser"})
+    public void setUp(String browser) {
+        System.setProperty("browser", browser);
+        logger.info("Initializing WebDriver for browser: {}", browser);
+        driver = DriverFactory.getDriver();
         driver.manage().window().maximize();
+        logger.info("Browser window maximized");
     }
 
     @AfterMethod
     public void stopBrowser() {
-        driver.quit();
+        logger.info("Closing WebDriver");
+        DriverFactory.closeDriver();
     }
 }
