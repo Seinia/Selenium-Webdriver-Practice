@@ -12,7 +12,10 @@ import pages.learn_portal.LearnCatalogPage;
 import pages.learn_portal.LearnDotNetCoursePage;
 import pages.learn_portal.LearnHomePage;
 import pages.learn_portal.LearnTechnicalAndTechnologyPage;
+import service.TestDataCampusCourseService;
 import service.TestDataLearnCourseService;
+import service.TestDataService;
+import service.TestDataServiceDecorator;
 import tests.base.BaseTest;
 
 public class CourseRegistrationOnLearnTest extends BaseTest {
@@ -29,21 +32,19 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
     @Parameters({"environment"})
     public void setUpTest(String environment) {
         System.setProperty("environment", environment);
-        logger.info("Setting up test environment: {}", environment);
         learnhomePage = new LearnHomePage(driver).openPage().acceptCookie();
-        logger.debug("Opened Learn homepage and accepted cookies");
-        testData = TestDataLearnCourseService.getTestDataFromProperties();
-        logger.info("Loaded test data from properties");
+        TestDataService<LearnCourseTestData> learnDataService =
+                new TestDataServiceDecorator<>(new TestDataLearnCourseService());
+        testData = learnDataService.getTestDataFromProperties();
     }
 
     @Test(description = "Test learn home page display")
     public void testHomePageIsDisplayed() {
         logger.info("Starting test: testHomePageIsDisplayed");
-        String actualText = testData.getHomePageText();
-        String expectedText = testData.getHomePageText();
 
-        logger.info("Asserting home page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Home page text mismatch");
+        Assert.assertEquals(testData.getHomePageText(),
+                testData.getHomePageText(),
+                "Home page text mismatch");
 
         logger.info("Test testHomePageIsDisplayed PASSED");
     }
@@ -52,13 +53,10 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
     public void testCatalogNavigation() {
         logger.info("Starting test: testCatalogNavigation");
         learncatalogPage = learnhomePage.clickCatalogButton();
-        logger.debug("Navigated to Learn Catalog page");
 
-        String actualText = testData.getCatalogPageText();
-        String expectedText = testData.getCatalogPageText();
-
-        logger.info("Asserting catalog page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Catalog page text mismatch");
+        Assert.assertEquals(testData.getCatalogPageText(),
+                testData.getCatalogPageText(),
+                "Catalog page text mismatch");
 
         logger.info("Test testCatalogNavigation PASSED");
     }
@@ -68,13 +66,10 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
         logger.info("Starting test: testFiltersOnTechnicalAndTechnologyPage");
         learncatalogPage = learnhomePage.clickCatalogButton();
         learnTechnicalAndTechnologyPage = learncatalogPage.clickTechnicalAndTechnologyCard();
-        logger.debug("Navigated to Technical and Technology page");
 
-        String actualText = learnTechnicalAndTechnologyPage.getTechnicalAndTechnologyPageText();
-        String expectedText = testData.getTechnicalAndTechnologyPageText();
-
-        logger.info("Asserting technical and technology page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Page text mismatch");
+        Assert.assertEquals(learnTechnicalAndTechnologyPage.getTechnicalAndTechnologyPageText(),
+                testData.getTechnicalAndTechnologyPageText(),
+                "Page text mismatch");
 
         learnTechnicalAndTechnologyPage
                 .clickEnglishCheckBox()
@@ -82,13 +77,9 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
                 .clickIntermediateCheckBox()
                 .clickEpamCheckBox();
 
-        logger.info("Applied filters: English, More than 20 hours, Intermediate, EPAM");
-
-        int actualFilterCount = learnTechnicalAndTechnologyPage.getListOfFiltersSize();
-        int expectedFilterCount = 4;
-
-        logger.info("Asserting number of applied filters: expected '{}', found '{}'", expectedFilterCount, actualFilterCount);
-        Assert.assertEquals(actualFilterCount, expectedFilterCount, "Filters count mismatch");
+        Assert.assertEquals(learnTechnicalAndTechnologyPage.getListOfFiltersSize(),
+                4,
+                "Filters count mismatch");
 
         logger.info("Test testFiltersOnTechnicalAndTechnologyPage PASSED");
     }
@@ -104,21 +95,16 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
                 .clickIntermediateCheckBox()
                 .clickEpamCheckBox()
                 .clickDotNetCourseCard();
-        logger.debug("Navigated to .NET Course page");
 
         SoftAssert softAssert = new SoftAssert();
 
-        String actualLanguage = learnDotNetCoursePage.getLanguageText();
-        String expectedLanguage = testData.getLanguageText();
+        softAssert.assertEquals(learnDotNetCoursePage.getLanguageText(),
+                testData.getLanguageText(),
+                "Course language mismatch");
 
-        logger.info("Asserting course language: expected '{}', found '{}'", expectedLanguage, actualLanguage);
-        softAssert.assertEquals(actualLanguage, expectedLanguage, "Course language mismatch");
-
-        String actualEffort = learnDotNetCoursePage.getEstimatedEffortsText();
-        String expectedEffort = testData.getEstimatedEffortsText();
-
-        logger.info("Asserting course duration: expected '{}', found '{}'", expectedEffort, actualEffort);
-        softAssert.assertEquals(actualEffort, expectedEffort, "Course duration mismatch");
+        softAssert.assertEquals(learnDotNetCoursePage.getEstimatedEffortsText(),
+                testData.getEstimatedEffortsText(),
+                "Course duration mismatch");
 
         softAssert.assertAll();
         logger.info("Test testDotNetCourseDetails PASSED");

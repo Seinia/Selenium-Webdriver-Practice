@@ -1,5 +1,7 @@
 package pages.learn_portal;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
 
 public class LearnDotNetCoursePage extends BasePage {
+
+    private static final Logger logger = LogManager.getLogger(LearnDotNetCoursePage.class);
 
     @FindBy(xpath = "//div[text()='ENG']")
     private WebElement languageText;
@@ -22,10 +26,12 @@ public class LearnDotNetCoursePage extends BasePage {
     }
 
     public String getLanguageText(){
+        logger.debug("Get language text for verification of course from Learn Catalog Page");
         return getTextFromElement(languageText);
     }
 
     public String getEstimatedEffortsText(){
+        logger.debug("Get estimated efforts text text for verification of course from Learn Catalog Page");
         return getTextFromElement(estimatedEffortsText);
     }
 

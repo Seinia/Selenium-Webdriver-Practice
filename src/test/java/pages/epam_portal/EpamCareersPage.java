@@ -1,5 +1,7 @@
 package pages.epam_portal;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,11 +10,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
+import pages.campus_portal.CampusTrainingPage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EpamCareersPage extends BasePage {
+
+    private static final Logger logger = LogManager.getLogger(EpamCareersPage.class);
 
     @FindBy(xpath = "//span[text()='visit epam.ua' and contains(@class, 'desktop')]")
     private WebElement visitButton;
@@ -32,33 +37,29 @@ public class EpamCareersPage extends BasePage {
     }
 
     public EpamJobListPage clickVisitButton(){
-        scrollToElement(visitButton);
+        scrollToElement(visitButton, "arguments[0].scrollIntoView({block: 'center'});");
         clickElement(visitButton);
+        logger.info("Click visit button on EPAM Careers Page");
         return new EpamJobListPage(driver);
     }
 
     public EpamCareersPage clickFindButton(){
-        scrollToElement(findButton);
+        scrollToElement(findButton, "arguments[0].scrollIntoView({block: 'center'});");
         clickElement(findButton);
+        logger.info("Click find button");
         return this;
     }
 
 
     public String getEpamCareersPageText(){
+        logger.debug("Get text for verification of EPAM Careers Page");
         return getTextFromElement(epamCareersPageText);
     }
 
     public void switchToNewTab() {
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
-    }
-
-    @Override
-    protected void scrollToElement(WebElement webElement) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.visibilityOf(webElement));
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block: 'center'});", webElement);
+        logger.info("Switch to a new tab from EPAM Careers Page");
     }
 
 }

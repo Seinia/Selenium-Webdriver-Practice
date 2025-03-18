@@ -33,9 +33,13 @@ public abstract class BasePage {
                 .until(ExpectedConditions.elementToBeClickable(element)).sendKeys(text);
     }
 
-    protected void scrollToElement(WebElement webElement){
+    protected void scrollToElement(WebElement webElement, String argument) {
         new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.visibilityOf(webElement));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+        ((JavascriptExecutor) driver).executeScript(argument, webElement);
+    }
+
+    protected void scrollToElement(WebElement webElement){
+        scrollToElement(webElement, "arguments[0].scrollIntoView(true);");
     }
 }

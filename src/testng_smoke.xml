@@ -3,7 +3,7 @@
 <suite name="Parallel Test Suite" thread-count="3" parallel="classes" >
     <parameter name="environment" value="qa" />
     <parameter name="browser" value="edge" />
-    <test name="Parallel Test Chrome" >
+    <test name="Smoke Parallel Test" >
         <classes>
             <class name="tests.JobFindOnEpamTest">
                 <methods>

@@ -1,6 +1,7 @@
 package tests;
 
 import model.CampusCourseTestData;
+import model.LearnCourseTestData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
@@ -12,6 +13,9 @@ import pages.campus_portal.CampusLoginPage;
 import pages.campus_portal.CampusTrainingPage;
 import pages.learn_portal.LearnHomePage;
 import service.TestDataCampusCourseService;
+import service.TestDataLearnCourseService;
+import service.TestDataService;
+import service.TestDataServiceDecorator;
 import tests.base.BaseTest;
 
 public class CourseRegistrationOnCampusTest extends BaseTest {
@@ -28,24 +32,20 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
     @Parameters({"environment"})
     public void setUpTest(String environment) {
         System.setProperty("environment", environment);
-        logger.info("Setting up test environment: {}", environment);
-        testData = TestDataCampusCourseService.getTestDataFromProperties();
-        logger.info("Loaded test data from properties");
         learnHomePage = new LearnHomePage(driver).openPage().acceptCookie();
-        logger.debug("Opened Learn homepage and accepted cookies");
+        TestDataService<CampusCourseTestData> campusDataService =
+                new TestDataServiceDecorator<>(new TestDataCampusCourseService());
+        testData = campusDataService.getTestDataFromProperties();
     }
 
     @Test(description = "Verify 'Learn' homepage elements are displayed")
     public void testLearnHomePageIsDisplayed() {
         logger.info("Starting test: testLearnHomePageIsDisplayed");
 
-        String actualText = learnHomePage.getHomePageText();
-        String expectedText = testData.getLearnHomePageText();
-
-        logger.info("Asserting Learn home page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Learn home page text mismatch");
-
-        logger.info("Test testLearnHomePageIsDisplayed PASSED");
+        Assert.assertEquals(learnHomePage.getHomePageText(),
+                testData.getLearnHomePageText(),
+                "Learn home page text mismatch");
+        logger.info("Test testLearnHomePageIsDisplayed PASSED\n");
     }
 
     @Test(description = "Verify campus home page elements are displayed")
@@ -56,13 +56,10 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
         learnHomePage.switchToNewTab();
         logger.debug("Navigated to Campus homepage");
 
-        String actualText = campusHomePage.getHomePageText();
-        String expectedText = testData.getCampusHomePageText();
-
-        logger.info("Asserting Campus home page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Campus page text mismatch");
-
-        logger.info("Test testCampusHomePageIsDisplayed PASSED");
+        Assert.assertEquals(campusHomePage.getHomePageText(),
+                testData.getCampusHomePageText(),
+                "Campus page text mismatch");
+        logger.info("Test testCampusHomePageIsDisplayed PASSED\n");
     }
 
     @Test(description = "Verify navigation on training page")
@@ -72,15 +69,11 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
         campusHomePage = learnHomePage.clickCampusButton();
         learnHomePage.switchToNewTab();
         campusTrainingPage = campusHomePage.clickFindAProgramButton();
-        logger.debug("Navigated to Campus training page");
 
-        String actualText = campusTrainingPage.getTrainingPageText();
-        String expectedText = testData.getTrainingPageText();
-
-        logger.info("Asserting Campus training page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Campus training page text mismatch");
-
-        logger.info("Test testTrainingPageNavigation PASSED");
+        Assert.assertEquals(campusTrainingPage.getTrainingPageText(),
+                testData.getTrainingPageText(),
+                "Campus training page text mismatch");
+        logger.info("Test testTrainingPageNavigation PASSED\n");
     }
 
     @Test(description = "Verify filters on campus training page")
@@ -98,15 +91,12 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 .clickSkillsDropDown()
                 .inputSearchField(testData.getCourseSkill())
                 .clickDropDownCheckBox();
-        logger.info("Applied filters: Location '{}', Skill '{}'", testData.getCourseLocation(), testData.getCourseSkill());
 
-        String actualText = campusTrainingPage.getCourseCardText();
-        String expectedText = testData.getCourseName();
 
-        logger.info("Asserting course card text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Course card text mismatch");
-
-        logger.info("Test testCampusTrainingPageFilters PASSED");
+        Assert.assertEquals(campusTrainingPage.getCourseCardText(),
+                testData.getCourseName(),
+                "Course card text mismatch");
+        logger.info("Test testCampusTrainingPageFilters PASSED\n");
     }
 
     @Test(description = "Verify JavaScript course registration process")
@@ -126,15 +116,11 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
                 .clickDropDownCheckBox()
                 .clickCourseCard()
                 .clickRegisterButton();
-        logger.debug("Navigated to course registration page");
 
-        String actualText = campusLoginPage.getLoginPageText();
-        String expectedText = testData.getLoginPageText();
-
-        logger.info("Asserting login page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Login page text mismatch");
-
-        logger.info("Test testJavaScriptCourseRegistration PASSED");
+        Assert.assertEquals(campusLoginPage.getLoginPageText(),
+                testData.getLoginPageText(),
+                "Login page text mismatch");
+        logger.info("Test testJavaScriptCourseRegistration PASSED\n");
     }
 
 }

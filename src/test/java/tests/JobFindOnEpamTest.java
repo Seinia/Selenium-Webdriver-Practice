@@ -1,5 +1,6 @@
 package tests;
 
+import model.CampusCourseTestData;
 import model.EpamCareersTestData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,10 @@ import pages.epam_portal.EpamCareersPage;
 import pages.epam_portal.EpamHomePage;
 import pages.epam_portal.EpamJobDetailsPage;
 import pages.epam_portal.EpamJobListPage;
+import service.TestDataCampusCourseService;
 import service.TestDataEpamCareersService;
+import service.TestDataService;
+import service.TestDataServiceDecorator;
 import tests.base.BaseTest;
 
 public class JobFindOnEpamTest extends BaseTest {
@@ -29,23 +33,20 @@ public class JobFindOnEpamTest extends BaseTest {
     @Parameters({"environment"})
     public void setUpTest(String environment) {
         System.setProperty("environment", environment);
-        logger.info("Setting up test environment: {}", environment);
         epamHomePage = new EpamHomePage(driver).openPage();
-        logger.debug("Opened EPAM homepage");
-        testData = TestDataEpamCareersService.getTestDataFromProperties();
-        logger.info("Loaded test data from properties");
+        TestDataService<EpamCareersTestData> epamDataService =
+                new TestDataServiceDecorator<>(new TestDataEpamCareersService());
+        testData = epamDataService.getTestDataFromProperties();
     }
 
     @Test(description = "Verify navigation on EPAM Careers homepage")
     public void testCareersNavigation() {
         logger.info("Starting test: testCareersNavigation");
         epamCareersPage = epamHomePage.clickCareersButton();
-        logger.debug("Navigated to EPAM Careers page");
-        String actualText = epamCareersPage.getEpamCareersPageText();
-        String expectedText = testData.getCareersPageText();
 
-        logger.info("Asserting careers page text: expected '{}', found '{}'", expectedText, actualText);
-        Assert.assertEquals(actualText, expectedText, "Careers page text mismatch");
+        Assert.assertEquals(epamCareersPage.getEpamCareersPageText(),
+                testData.getCareersPageText(),
+                "Careers page text mismatch");
 
         logger.info("Test testCareersNavigation PASSED");
     }
@@ -54,26 +55,22 @@ public class JobFindOnEpamTest extends BaseTest {
     public void testJobListPageFilters() {
         logger.info("Starting test: testJobListPageFilters");
         epamCareersPage = epamHomePage.clickCareersButton();
-        logger.debug("Navigated to EPAM Careers page");
 
         epamJobListPage = epamCareersPage
                 .clickFindButton()
                 .clickVisitButton();
         epamCareersPage.switchToNewTab();
-        logger.debug("Switched to new tab for job list page");
 
         epamJobListPage.inputSkillsField(testData.getJobSkill())
                 .clickSpecialisationTextBox()
                 .clickSpecialisationCheckBox()
                 .inputLocationTextBox();
 
-        logger.info("Applied filters: Skill '{}', Specialisation '{}', Location '{}'",
-                testData.getJobSkill(), testData.getJobSpecialization(), testData.getJobLocation());
 
-        boolean isJobCorrect = epamJobListPage.getJobCardText().trim().contains(testData.getJobSpecialization());
-        logger.info("Asserting job card title contains specialization: '{}'", testData.getJobSpecialization());
-
-        Assert.assertTrue(isJobCorrect, "Job card title mismatch");
+        Assert.assertTrue(epamJobListPage.getJobCardText()
+                        .trim()
+                        .contains(testData.getJobSpecialization()),
+                "Job card title mismatch");
         logger.info("Test testJobListPageFilters PASSED");
     }
 
@@ -81,30 +78,26 @@ public class JobFindOnEpamTest extends BaseTest {
     public void testJobApplicationSubmission() {
         logger.info("Starting test: testJobApplicationSubmission");
         epamCareersPage = epamHomePage.clickCareersButton();
-        logger.debug("Navigated to EPAM Careers page");
         epamJobListPage = epamCareersPage
                 .clickFindButton()
                 .clickVisitButton();
         epamCareersPage.switchToNewTab();
-        logger.debug("Switched to new tab for job list page");
 
         epamJobDetailsPage = epamJobListPage.inputSkillsField(testData.getJobSkill())
                 .clickSpecialisationTextBox()
                 .clickSpecialisationCheckBox()
                 .inputLocationTextBox()
                 .clickJobCard();
-        logger.debug("Opened job details page");
 
         SoftAssert softAssert = new SoftAssert();
 
-        String actualJobTitle = epamJobDetailsPage.getJobTitleText();
-        String actualLocation = epamJobDetailsPage.getLocationText();
+        softAssert.assertTrue(epamJobDetailsPage.getJobTitleText()
+                .contains(testData.getJobSpecialization()),
+                "Job title mismatch");
 
-        logger.info("Asserting job title: expected '{}', found '{}'", testData.getJobSpecialization(), actualJobTitle);
-        softAssert.assertTrue(actualJobTitle.contains(testData.getJobSpecialization()), "Job title mismatch");
-
-        logger.info("Asserting job location: expected '{}', found '{}'", testData.getJobLocation(), actualLocation);
-        softAssert.assertTrue(actualLocation.contains(testData.getJobLocation()), "Job location mismatch");
+        softAssert.assertTrue(epamJobDetailsPage.getLocationText()
+                .contains(testData.getJobLocation()),
+                "Job location mismatch");
 
         softAssert.assertAll();
         logger.info("Test testJobApplicationSubmission PASSED");

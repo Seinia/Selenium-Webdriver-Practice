@@ -1,5 +1,7 @@
 package pages.learn_portal;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +11,8 @@ import pages.base.BasePage;
 import java.util.List;
 
 public class LearnTechnicalAndTechnologyPage extends BasePage {
+
+    private static final Logger logger = LogManager.getLogger(LearnTechnicalAndTechnologyPage.class);
 
     @FindBy(xpath = "//div[@role='option'][.//div[text()='English']]//div[@class='uui-checkbox']")
     private WebElement englishCheckBox;
@@ -38,26 +42,31 @@ public class LearnTechnicalAndTechnologyPage extends BasePage {
 
     public LearnTechnicalAndTechnologyPage clickEnglishCheckBox(){
         scrollToElementAndClick(englishCheckBox);
+        logger.info("Click english check box");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickMoreThanTwentyHoursCheckBox(){
         scrollToElementAndClick(moreThanTwentyHoursCheckBox);
+        logger.info("Click more than 20 hours check box");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickIntermediateCheckBox(){
         scrollToElementAndClick(intermediateCheckBox);
+        logger.info("Click intermediate check box");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickEpamCheckBox(){
         scrollToElementAndClick(epamCheckBox);
+        logger.info("Click epam check box");
         return this;
     }
 
     public LearnDotNetCoursePage clickDotNetCourseCard(){
         scrollToElementAndClick(dotNetCourseCard);
+        logger.info("Click course card");
         return new LearnDotNetCoursePage(driver);
     }
 
@@ -71,6 +80,7 @@ public class LearnTechnicalAndTechnologyPage extends BasePage {
     }
 
     public String getTechnicalAndTechnologyPageText(){
+        logger.debug("Get text for verification of Learn Technical and Technology Page");
         return getTextFromElement(technicalAndTechnologyPageText);
     }
 }
