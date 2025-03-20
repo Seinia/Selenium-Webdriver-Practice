@@ -1,5 +1,6 @@
 package pages.learn_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,9 +18,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class LearnHomePage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(LearnHomePage.class);
 
     private final String HOMEPAGE_URL = "https://learn.epam.com/start";
 
@@ -48,18 +48,18 @@ public class LearnHomePage extends BasePage {
 
     public LearnCatalogPage clickCatalogButton(){
         clickElement(catalogButton);
-        logger.info("Click catalog button");
+        log.info("Clicked catalog button on the top of left navigation menu");
         return new LearnCatalogPage(driver);
     }
 
     public LearnHomePage acceptCookie(){
         clickElement(acceptCookieButton);
-        logger.info("Accept cookies");
+        log.info("Accept cookies for the Learn home page");
         return this;
     }
 
     public String getHomePageText(){
-        logger.debug("Get text for verification of Learn Home Page");
+        log.debug("Got text for verification of Learn Home Page");
         return getTextFromElement(homePageText);
     }
 
@@ -67,14 +67,14 @@ public class LearnHomePage extends BasePage {
         new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.visibilityOf(campusButton));
         clickElement(campusButton);
-        logger.info("Click campus button");
+        log.info("Clicked campus button on the bottom of left navigation menu");
         return new CampusHomePage(driver);
     }
 
     public void switchToNewTab() {
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
-        logger.info("Switch to a new tab from Learn Home Page");
+        log.info("Switched to a new tab from Learn Home Page");
     }
 
 }

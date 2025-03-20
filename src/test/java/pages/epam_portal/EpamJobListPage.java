@@ -1,5 +1,6 @@
 package pages.epam_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -15,9 +16,8 @@ import pages.campus_portal.CampusTrainingPage;
 
 import java.time.Duration;
 
+@Slf4j
 public class EpamJobListPage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(EpamJobListPage.class);
 
     @FindBy(id = "new_form_job_search-keyword")
     private WebElement skillsField;
@@ -44,39 +44,39 @@ public class EpamJobListPage extends BasePage {
 
     public EpamJobListPage inputSkillsField(String text){
         inputText(skillsField, text);
-        logger.info("Input skills due to filter job list");
+        log.info("Filled skills in the skills input on filter menu");
         return this;
     }
 
     public EpamJobListPage inputLocationTextBox(){
         clickElement(locationTextBox);
         clickElement(locationTextBoxOpened);
-        logger.info("Input location");
+        log.info("Filled location in the location input field on filter menu");
         return this;
     }
 
     public EpamJobListPage clickSpecialisationTextBox(){
         clickElement(specialisationTextBox);
-        logger.info("Click specialisation text box");
+        log.info("Clicked specialisation text box on filter menu");
         return this;
     }
 
     public EpamJobListPage clickSpecialisationCheckBox(){
         clickElement(specialisationCheckBox);
-        logger.info("Click specialisation check box");
+        log.info("Clicked specialisation check box in drop down on filter menu");
         return this;
     }
 
     public String getJobCardText() {
         waitForElementToContainText(jobCard, "Data", 500);
-        logger.debug("Get text of job card from EPAM Job Details Page");
+        log.debug("Got text of job card from EPAM Job Details Page");
         return getTextFromElement(jobCard);
     }
 
     public EpamJobDetailsPage clickJobCard() {
         waitForElementToContainText(jobCard, "Data", 500);
         clickElement(jobCard);
-        logger.info("Click job card");
+        log.info("Clicked necessary job card after filtering");
         return new EpamJobDetailsPage(driver);
     }
 

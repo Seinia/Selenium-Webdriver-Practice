@@ -1,9 +1,11 @@
 package util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+@Slf4j
 public class TestListener implements ITestListener {
 
     @Override

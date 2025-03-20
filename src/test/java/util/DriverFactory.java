@@ -1,6 +1,7 @@
 package util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -10,9 +11,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+@Slf4j
 public class DriverFactory {
 
-    private static final Logger logger = LogManager.getLogger(DriverFactory.class);
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     private DriverFactory() {
@@ -25,37 +26,39 @@ public class DriverFactory {
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
                     webDriver = new FirefoxDriver();
-                    logger.debug("Firefox driver initialized");
+                    log.debug("Firefox driver initialized for the test");
                     break;
                 case "edge":
                     WebDriverManager.edgedriver().setup();
                     webDriver = new EdgeDriver();
-                    logger.debug("Edge driver initialized");
+                    log.debug("Edge driver initialized for the test");
                     break;
                 case "safari":
                     WebDriverManager.safaridriver().setup();
                     webDriver = new SafariDriver();
-                    logger.debug("Safari driver initialized");
+                    log.debug("Safari driver initialized for the test");
                     break;
                 case "ie":
                     WebDriverManager.iedriver().setup();
                     webDriver = new InternetExplorerDriver();
-                    logger.debug("Internet Explorer driver initialized");
+                    log.debug("Internet Explorer driver initialized for the test");
                     break;
                 default:
                     WebDriverManager.chromedriver().setup();
                     webDriver = new ChromeDriver();
-                    logger.debug("Chrome driver initialized");
+                    log.debug("Chrome driver initialized for the test");
             }
             webDriver.manage().window().maximize();
             driver.set(webDriver);
         }
+        log.debug("Driver was initialized before");
         return driver.get();
     }
 
     public static void closeDriver() {
         if (driver.get() != null) {
             driver.get().quit();
+            log.debug("Driver was closed");
             driver.remove();
         }
     }

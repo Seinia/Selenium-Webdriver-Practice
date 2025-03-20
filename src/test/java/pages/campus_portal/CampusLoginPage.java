@@ -1,5 +1,6 @@
 package pages.campus_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -10,9 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
 
+@Slf4j
 public class CampusLoginPage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(CampusLoginPage.class);
 
     @FindBy(xpath = "//h3[text()='Welcome to EPAM']")
     private WebElement loginPageText;
@@ -23,7 +23,7 @@ public class CampusLoginPage extends BasePage {
     }
 
     public String getLoginPageText(){
-        logger.debug("Get text for verification from Campus Login Page");
+        log.debug("Got text for verification from Campus Login Page");
         return getTextFromElement(loginPageText);
     }
 

@@ -1,5 +1,6 @@
 package pages.learn_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -10,9 +11,8 @@ import pages.base.BasePage;
 
 import java.util.List;
 
+@Slf4j
 public class LearnTechnicalAndTechnologyPage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(LearnTechnicalAndTechnologyPage.class);
 
     @FindBy(xpath = "//div[@role='option'][.//div[text()='English']]//div[@class='uui-checkbox']")
     private WebElement englishCheckBox;
@@ -42,31 +42,31 @@ public class LearnTechnicalAndTechnologyPage extends BasePage {
 
     public LearnTechnicalAndTechnologyPage clickEnglishCheckBox(){
         scrollToElementAndClick(englishCheckBox);
-        logger.info("Click english check box");
+        log.info("Clicked english check box on the left filter menu");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickMoreThanTwentyHoursCheckBox(){
         scrollToElementAndClick(moreThanTwentyHoursCheckBox);
-        logger.info("Click more than 20 hours check box");
+        log.info("Click more than 20 hours check box on the left filter menu");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickIntermediateCheckBox(){
         scrollToElementAndClick(intermediateCheckBox);
-        logger.info("Click intermediate check box");
+        log.info("Click intermediate check box on the left filter menu");
         return this;
     }
 
     public LearnTechnicalAndTechnologyPage clickEpamCheckBox(){
         scrollToElementAndClick(epamCheckBox);
-        logger.info("Click epam check box");
+        log.info("Click EPAM check box on the left filter menu");
         return this;
     }
 
     public LearnDotNetCoursePage clickDotNetCourseCard(){
         scrollToElementAndClick(dotNetCourseCard);
-        logger.info("Click course card");
+        log.info("Click necessary course card after filtering");
         return new LearnDotNetCoursePage(driver);
     }
 
@@ -80,7 +80,7 @@ public class LearnTechnicalAndTechnologyPage extends BasePage {
     }
 
     public String getTechnicalAndTechnologyPageText(){
-        logger.debug("Get text for verification of Learn Technical and Technology Page");
+        log.debug("Got text for verification of Learn Technical and Technology Page");
         return getTextFromElement(technicalAndTechnologyPageText);
     }
 }

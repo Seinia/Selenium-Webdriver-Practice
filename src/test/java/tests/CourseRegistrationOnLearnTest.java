@@ -1,5 +1,6 @@
 package tests;
 
+import lombok.extern.slf4j.Slf4j;
 import model.LearnCourseTestData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +19,8 @@ import service.TestDataService;
 import service.TestDataServiceDecorator;
 import tests.base.BaseTest;
 
+@Slf4j
 public class CourseRegistrationOnLearnTest extends BaseTest {
-
-    private static final Logger logger = LogManager.getLogger(CourseRegistrationOnLearnTest.class);
 
     private LearnHomePage learnhomePage;
     private LearnCatalogPage learncatalogPage;
@@ -40,30 +40,30 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
 
     @Test(description = "Test learn home page display")
     public void testHomePageIsDisplayed() {
-        logger.info("Starting test: testHomePageIsDisplayed");
+        log.info("Starting test: testHomePageIsDisplayed");
 
         Assert.assertEquals(testData.getHomePageText(),
                 testData.getHomePageText(),
                 "Home page text mismatch");
 
-        logger.info("Test testHomePageIsDisplayed PASSED");
+        log.info("Test testHomePageIsDisplayed PASSED");
     }
 
     @Test(description = "Test catalog home page display")
     public void testCatalogNavigation() {
-        logger.info("Starting test: testCatalogNavigation");
+        log.info("Starting test: testCatalogNavigation");
         learncatalogPage = learnhomePage.clickCatalogButton();
 
         Assert.assertEquals(testData.getCatalogPageText(),
                 testData.getCatalogPageText(),
                 "Catalog page text mismatch");
 
-        logger.info("Test testCatalogNavigation PASSED");
+        log.info("Test testCatalogNavigation PASSED");
     }
 
     @Test(description = "Test technical and technology page filters")
     public void testFiltersOnTechnicalAndTechnologyPage() {
-        logger.info("Starting test: testFiltersOnTechnicalAndTechnologyPage");
+        log.info("Starting test: testFiltersOnTechnicalAndTechnologyPage");
         learncatalogPage = learnhomePage.clickCatalogButton();
         learnTechnicalAndTechnologyPage = learncatalogPage.clickTechnicalAndTechnologyCard();
 
@@ -81,12 +81,12 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
                 4,
                 "Filters count mismatch");
 
-        logger.info("Test testFiltersOnTechnicalAndTechnologyPage PASSED");
+        log.info("Test testFiltersOnTechnicalAndTechnologyPage PASSED");
     }
 
     @Test(description = "Test registration for the course on learn portal")
     public void testDotNetCourseDetails() {
-        logger.info("Starting test: testDotNetCourseDetails");
+        log.info("Starting test: testDotNetCourseDetails");
         learncatalogPage = learnhomePage.clickCatalogButton();
         learnTechnicalAndTechnologyPage = learncatalogPage.clickTechnicalAndTechnologyCard();
         learnDotNetCoursePage = learnTechnicalAndTechnologyPage
@@ -107,7 +107,7 @@ public class CourseRegistrationOnLearnTest extends BaseTest {
                 "Course duration mismatch");
 
         softAssert.assertAll();
-        logger.info("Test testDotNetCourseDetails PASSED");
+        log.info("Test testDotNetCourseDetails PASSED");
     }
 
 }

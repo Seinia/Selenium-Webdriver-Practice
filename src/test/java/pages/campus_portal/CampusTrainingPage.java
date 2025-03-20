@@ -1,5 +1,6 @@
 package pages.campus_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -14,9 +15,8 @@ import pages.base.BasePage;
 import java.time.Duration;
 import java.util.List;
 
+@Slf4j
 public class CampusTrainingPage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(CampusTrainingPage.class);
 
     @FindBy(xpath =
             "//div[contains(@class, 'FMk1Jo') and contains(@class, 'uui-size-36')][text()='Locations']"
@@ -47,30 +47,30 @@ public class CampusTrainingPage extends BasePage {
 
     public CampusTrainingPage clickLocationsDropDown(){
         clickElement(locationsDropDown);
-        logger.info("Click drop down for location");
+        log.info("Clicked drop down for location on the filter menu");
         return this;
     }
 
     public CampusTrainingPage clickSkillsDropDown(){
         clickElement(skillsDropDown);
-        logger.info("Click drop down for skills");
+        log.info("Clicked drop down for skills on the filter menu");
         return this;
     }
 
     public CampusCoursePage clickCourseCard(){
         clickElement(courseCard);
-        logger.info("Click necessary course card");
+        log.info("Clicked necessary course card after filtering");
         return new CampusCoursePage(driver);
     }
 
     public String getCourseCardText(){
-        logger.debug("Get text for verification of course card");
+        log.debug("Got text for verification of course card");
         return getTextFromElement(courseCard);
     }
 
     public CampusTrainingPage inputSearchField(String text){
         inputText(searchField, text);
-        logger.info("Input text due to filter courses");
+        log.info("Filled text to input field to filter courses");
         return this;
     }
 
@@ -81,12 +81,12 @@ public class CampusTrainingPage extends BasePage {
                 .ignoring(StaleElementReferenceException.class)
                 .until(driver1 -> dropDownCheckBox.size() == 1);
         dropDownCheckBox.get(0).click();
-        logger.info("Click item from drop down");
+        log.info("Clicked first item from drop down menu");
         return this;
     }
 
     public String getTrainingPageText(){
-        logger.debug("Get text for verification of Campus Training Page");
+        log.debug("Got text for verification of Campus Training Page");
         return getTextFromElement(trainingPageText);
     }
 

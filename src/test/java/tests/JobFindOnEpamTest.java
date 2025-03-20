@@ -1,5 +1,6 @@
 package tests;
 
+import lombok.extern.slf4j.Slf4j;
 import model.CampusCourseTestData;
 import model.EpamCareersTestData;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +20,8 @@ import service.TestDataService;
 import service.TestDataServiceDecorator;
 import tests.base.BaseTest;
 
+@Slf4j
 public class JobFindOnEpamTest extends BaseTest {
-
-    private static final Logger logger = LogManager.getLogger(JobFindOnEpamTest.class);
 
     private EpamHomePage epamHomePage;
     private EpamCareersPage epamCareersPage;
@@ -41,19 +41,19 @@ public class JobFindOnEpamTest extends BaseTest {
 
     @Test(description = "Verify navigation on EPAM Careers homepage")
     public void testCareersNavigation() {
-        logger.info("Starting test: testCareersNavigation");
+        log.info("Starting test: testCareersNavigation");
         epamCareersPage = epamHomePage.clickCareersButton();
 
         Assert.assertEquals(epamCareersPage.getEpamCareersPageText(),
                 testData.getCareersPageText(),
                 "Careers page text mismatch");
 
-        logger.info("Test testCareersNavigation PASSED");
+        log.info("Test testCareersNavigation PASSED");
     }
 
     @Test(description = "Verify job list page filters work correctly")
     public void testJobListPageFilters() {
-        logger.info("Starting test: testJobListPageFilters");
+        log.info("Starting test: testJobListPageFilters");
         epamCareersPage = epamHomePage.clickCareersButton();
 
         epamJobListPage = epamCareersPage
@@ -71,12 +71,12 @@ public class JobFindOnEpamTest extends BaseTest {
                         .trim()
                         .contains(testData.getJobSpecialization()),
                 "Job card title mismatch");
-        logger.info("Test testJobListPageFilters PASSED");
+        log.info("Test testJobListPageFilters PASSED");
     }
 
     @Test(description = "Verify job application submission process")
     public void testJobApplicationSubmission() {
-        logger.info("Starting test: testJobApplicationSubmission");
+        log.info("Starting test: testJobApplicationSubmission");
         epamCareersPage = epamHomePage.clickCareersButton();
         epamJobListPage = epamCareersPage
                 .clickFindButton()
@@ -100,7 +100,7 @@ public class JobFindOnEpamTest extends BaseTest {
                 "Job location mismatch");
 
         softAssert.assertAll();
-        logger.info("Test testJobApplicationSubmission PASSED");
+        log.info("Test testJobApplicationSubmission PASSED");
     }
 
 }

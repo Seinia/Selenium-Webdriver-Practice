@@ -1,5 +1,6 @@
 package tests.base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -11,24 +12,23 @@ import util.DriverFactory;
 import util.TestListener;
 
 @Listeners(TestListener.class)
+@Slf4j
 public abstract class BaseTest {
 
     protected WebDriver driver;
-    private static final Logger logger = LogManager.getLogger(BaseTest.class);
 
     @BeforeMethod
     @Parameters({"browser"})
     public void setUp(String browser) {
         System.setProperty("browser", browser);
-        logger.info("Initializing WebDriver for browser: {}", browser);
+        log.info("Initializing WebDriver for browser: {}", browser);
         driver = DriverFactory.getDriver();
-        driver.manage().window().maximize();
-        logger.info("Browser window maximized");
+        log.info("Browser window maximized");
     }
 
     @AfterMethod
     public void stopBrowser() {
-        logger.info("Closing WebDriver");
+        log.info("Closing WebDriver");
         DriverFactory.closeDriver();
     }
 }

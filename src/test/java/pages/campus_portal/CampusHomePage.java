@@ -1,5 +1,6 @@
 package pages.campus_portal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -9,9 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import pages.base.BasePage;
 
 
+@Slf4j
 public class CampusHomePage extends BasePage {
-
-    private static final Logger logger = LogManager.getLogger(CampusHomePage.class);
 
     @FindBy(xpath = "//button[@id='onetrust-accept-btn-handler']")
     private WebElement acceptCookieButton;
@@ -29,7 +29,7 @@ public class CampusHomePage extends BasePage {
 
     public CampusHomePage acceptCookie(){
         clickElement(acceptCookieButton);
-        logger.info("Accept cookies");
+        log.info("Accepted cookies for Campus home page");
         return this;
     }
 
@@ -39,6 +39,7 @@ public class CampusHomePage extends BasePage {
 
     public CampusTrainingPage clickFindAProgramButton(){
         clickElement(findAProgramButton);
+        log.info("Clicked \"Find a program\" button on the center of the page");
         return new CampusTrainingPage(driver);
     }
 
