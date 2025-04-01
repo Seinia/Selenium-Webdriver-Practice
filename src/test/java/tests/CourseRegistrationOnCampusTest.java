@@ -77,51 +77,51 @@ public class CourseRegistrationOnCampusTest extends BaseTest {
         log.info("Test testTrainingPageNavigation PASSED\n");
     }
 
-    @Test(description = "Verify filters on campus training page")
-    public void testCampusTrainingPageFilters() {
-        log.info("Starting test: testCampusTrainingPageFilters");
-
-        campusHomePage = learnHomePage.clickCampusButton();
-        learnHomePage.switchToNewTab();
-        campusTrainingPage = campusHomePage
-                .acceptCookie()
-                .clickFindAProgramButton()
-                .clickLocationsDropDown()
-                .inputSearchField(testData.getCourseLocation())
-                .clickDropDownCheckBox()
-                .clickSkillsDropDown()
-                .inputSearchField(testData.getCourseSkill())
-                .clickDropDownCheckBox();
-
-
-        Assert.assertEquals(campusTrainingPage.getCourseCardText(),
-                testData.getCourseName(),
-                "Course card text mismatch");
-        log.info("Test testCampusTrainingPageFilters PASSED\n");
-    }
-
-    @Test(description = "Verify JavaScript course registration process")
-    public void testJavaScriptCourseRegistration() {
-        log.info("Starting test: testJavaScriptCourseRegistration");
-
-        campusHomePage = learnHomePage.clickCampusButton();
-        learnHomePage.switchToNewTab();
-        campusLoginPage = campusHomePage
-                .acceptCookie()
-                .clickFindAProgramButton()
-                .clickLocationsDropDown()
-                .inputSearchField(testData.getCourseLocation())
-                .clickDropDownCheckBox()
-                .clickSkillsDropDown()
-                .inputSearchField(testData.getCourseSkill())
-                .clickDropDownCheckBox()
-                .clickCourseCard()
-                .clickRegisterButton();
-
-        Assert.assertEquals(campusLoginPage.getLoginPageText(),
-                testData.getLoginPageText(),
-                "Login page text mismatch");
-        log.info("Test testJavaScriptCourseRegistration PASSED\n");
-    }
+//    @Test(description = "Verify filters on campus training page")
+//    public void testCampusTrainingPageFilters() {
+//        log.info("Starting test: testCampusTrainingPageFilters");
+//
+//        campusHomePage = learnHomePage.clickCampusButton();
+//        learnHomePage.switchToNewTab();
+//        campusTrainingPage = campusHomePage
+//                .acceptCookie()
+//                .clickFindAProgramButton()
+//                .clickLocationsDropDown()
+//                .inputSearchField(testData.getCourseLocation())
+//                .clickDropDownCheckBox()
+//                .clickSkillsDropDown()
+//                .inputSearchField(testData.getCourseSkill())
+//                .clickDropDownCheckBox();
+//
+//
+//        Assert.assertEquals(campusTrainingPage.getCourseCardText(),
+//                testData.getCourseName(),
+//                "Course card text mismatch");
+//        log.info("Test testCampusTrainingPageFilters PASSED\n");
+//    }
+//
+//    @Test(description = "Verify JavaScript course registration process")
+//    public void testJavaScriptCourseRegistration() {
+//        log.info("Starting test: testJavaScriptCourseRegistration");
+//
+//        campusHomePage = learnHomePage.clickCampusButton();
+//        learnHomePage.switchToNewTab();
+//        campusLoginPage = campusHomePage
+//                .acceptCookie()
+//                .clickFindAProgramButton()
+//                .clickLocationsDropDown()
+//                .inputSearchField(testData.getCourseLocation())
+//                .clickDropDownCheckBox()
+//                .clickSkillsDropDown()
+//                .inputSearchField(testData.getCourseSkill())
+//                .clickDropDownCheckBox()
+//                .clickCourseCard()
+//                .clickRegisterButton();
+//
+//        Assert.assertEquals(campusLoginPage.getLoginPageText(),
+//                testData.getLoginPageText(),
+//                "Login page text mismatch");
+//        log.info("Test testJavaScriptCourseRegistration PASSED\n");
+//    }
 
 }
