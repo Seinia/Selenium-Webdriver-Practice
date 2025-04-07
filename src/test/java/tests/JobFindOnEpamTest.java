@@ -51,56 +51,56 @@ public class JobFindOnEpamTest extends BaseTest {
         log.info("Test testCareersNavigation PASSED");
     }
 
-//    @Test(description = "Verify job list page filters work correctly")
-//    public void testJobListPageFilters() {
-//        log.info("Starting test: testJobListPageFilters");
-//        epamCareersPage = epamHomePage.clickCareersButton();
-//
-//        epamJobListPage = epamCareersPage
-//                .clickFindButton()
-//                .clickVisitButton();
-//        epamCareersPage.switchToNewTab();
-//
-//        epamJobListPage.inputSkillsField(testData.getJobSkill())
-//                .clickSpecialisationTextBox()
-//                .clickSpecialisationCheckBox()
-//                .inputLocationTextBox();
-//
-//
-//        Assert.assertTrue(epamJobListPage.getJobCardText()
-//                        .trim()
-//                        .contains(testData.getJobSpecialization()),
-//                "Job card title mismatch");
-//        log.info("Test testJobListPageFilters PASSED");
-//    }
-//
-//    @Test(description = "Verify job application submission process")
-//    public void testJobApplicationSubmission() {
-//        log.info("Starting test: testJobApplicationSubmission");
-//        epamCareersPage = epamHomePage.clickCareersButton();
-//        epamJobListPage = epamCareersPage
-//                .clickFindButton()
-//                .clickVisitButton();
-//        epamCareersPage.switchToNewTab();
-//
-//        epamJobDetailsPage = epamJobListPage.inputSkillsField(testData.getJobSkill())
-//                .clickSpecialisationTextBox()
-//                .clickSpecialisationCheckBox()
-//                .inputLocationTextBox()
-//                .clickJobCard();
-//
-//        SoftAssert softAssert = new SoftAssert();
-//
-//        softAssert.assertTrue(epamJobDetailsPage.getJobTitleText()
-//                .contains(testData.getJobSpecialization()),
-//                "Job title mismatch");
-//
-//        softAssert.assertTrue(epamJobDetailsPage.getLocationText()
-//                .contains(testData.getJobLocation()),
-//                "Job location mismatch");
-//
-//        softAssert.assertAll();
-//        log.info("Test testJobApplicationSubmission PASSED");
-//    }
+    @Test(description = "Verify job list page filters work correctly")
+    public void testJobListPageFilters() {
+        log.info("Starting test: testJobListPageFilters");
+        epamCareersPage = epamHomePage.clickCareersButton();
+
+        epamJobListPage = epamCareersPage
+                .clickFindButton()
+                .clickVisitButton();
+        epamCareersPage.switchToNewTab();
+
+        epamJobListPage
+                .acceptCookie()
+                .inputSkillsField(testData.getJobSkill())
+                .clickSpecialisationTextBox()
+                .clickSpecialisationCheckBox()
+                .inputLocationTextBox();
+
+
+        Assert.assertTrue(epamJobListPage.getJobCardText()
+                        .trim()
+                        .contains(testData.getJobSkill()),
+                "Job card title mismatch");
+        log.info("Test testJobListPageFilters PASSED");
+    }
+
+    @Test(description = "Verify job application submission process")
+    public void testJobApplicationSubmission() throws InterruptedException {
+        log.info("Starting test: testJobApplicationSubmission");
+        epamCareersPage = epamHomePage.clickCareersButton();
+        epamJobListPage = epamCareersPage
+                .clickFindButton()
+                .clickVisitButton();
+        epamCareersPage.switchToNewTab();
+
+        epamJobDetailsPage = epamJobListPage
+                .acceptCookie()
+                .inputSkillsField(testData.getJobSkill())
+                .clickSpecialisationTextBox()
+                .clickSpecialisationCheckBox()
+                .inputLocationTextBox()
+                .clickJobCard();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(epamJobDetailsPage.getJobTitleText()
+                .contains(testData.getJobSkill()),
+                "Job title mismatch");
+
+        softAssert.assertAll();
+        log.info("Test testJobApplicationSubmission PASSED");
+    }
 
 }

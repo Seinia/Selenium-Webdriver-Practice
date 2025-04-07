@@ -1,18 +1,14 @@
 package pages.epam_portal;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
-import pages.campus_portal.CampusTrainingPage;
 
 import java.time.Duration;
 
@@ -31,15 +27,24 @@ public class EpamJobListPage extends BasePage {
     @FindBy(className = "default-label")
     private WebElement specialisationTextBox;
 
-    @FindBy(xpath = "//span[text()='Business and Data Analysis']")
+    @FindBy(xpath = "//span[text()='Software, System, and Test Engineering']")
     private WebElement specialisationCheckBox;
 
     @FindBy(className = "search-result__item-name")
     private WebElement jobCard;
 
+    @FindBy(xpath = "//button[@id='onetrust-accept-btn-handler']")
+    private WebElement acceptCookieButton;
+
     public EpamJobListPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
+    }
+
+    public EpamJobListPage acceptCookie() {
+        clickElement(acceptCookieButton);
+        log.info("Accepted cookies for the EPAM home page");
+        return this;
     }
 
     public EpamJobListPage inputSkillsField(String text){
@@ -68,20 +73,20 @@ public class EpamJobListPage extends BasePage {
     }
 
     public String getJobCardText() {
-        waitForElementToContainText(jobCard, "Data", 500);
+        waitForElementToContainText(jobCard, "Lead", 500);
         log.debug("Got text of job card from EPAM Job Details Page");
         return getTextFromElement(jobCard);
     }
 
     public EpamJobDetailsPage clickJobCard() {
-        waitForElementToContainText(jobCard, "Data", 500);
+        waitForElementToContainText(jobCard, "Lead", 500);
         clickElement(jobCard);
         log.info("Clicked necessary job card after filtering");
         return new EpamJobDetailsPage(driver);
     }
 
     private void waitForElementToContainText(WebElement element, String text, int duration) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+        new WebDriverWait(driver, waitTimeout)
                 .withMessage("Could not find an item in drop down")
                 .pollingEvery(Duration.ofMillis(duration))
                 .ignoring(StaleElementReferenceException.class)

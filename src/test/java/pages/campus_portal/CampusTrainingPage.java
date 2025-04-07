@@ -1,14 +1,11 @@
 package pages.campus_portal;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
 
@@ -34,7 +31,7 @@ public class CampusTrainingPage extends BasePage {
     @FindBy(xpath = "//h1[text()='Training programs']")
     private WebElement trainingPageText;
 
-    @FindBy(xpath = "//div[text()='Automated Testing in JavaScript']")
+    @FindBy(xpath = "//div[text()='Introduction to Automated Testing in JavaScript']")
     private WebElement courseCard;
 
     @FindBy(className = "yByDq3")
@@ -75,11 +72,11 @@ public class CampusTrainingPage extends BasePage {
     }
 
     public CampusTrainingPage clickDropDownCheckBox(){
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+        new WebDriverWait(driver, waitTimeout)
                 .withMessage("Could not find an item in drop down")
                 .pollingEvery(Duration.ofMillis(50))
                 .ignoring(StaleElementReferenceException.class)
-                .until(driver1 -> dropDownCheckBox.size() == 1);
+                .until(driver -> dropDownCheckBox.size() == 1);
         dropDownCheckBox.get(0).click();
         log.info("Clicked first item from drop down menu");
         return this;

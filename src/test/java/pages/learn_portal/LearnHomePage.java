@@ -1,10 +1,6 @@
 package pages.learn_portal;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,14 +10,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.base.BasePage;
 import pages.campus_portal.CampusHomePage;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class LearnHomePage extends BasePage {
 
-    private final String HOMEPAGE_URL = "https://learn.epam.com/start";
+    private final String homepageUrl = "https://learn.epam.com/start";
 
     @FindBy(linkText = "Catalog")
     private WebElement catalogButton;
@@ -42,7 +37,7 @@ public class LearnHomePage extends BasePage {
     }
 
     public LearnHomePage openPage() {
-        driver.get(HOMEPAGE_URL);
+        driver.get(homepageUrl);
         return this;
     }
 
@@ -64,7 +59,7 @@ public class LearnHomePage extends BasePage {
     }
 
     public CampusHomePage clickCampusButton(){
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
+        new WebDriverWait(driver, waitTimeout)
                 .until(ExpectedConditions.visibilityOf(campusButton));
         clickElement(campusButton);
         log.info("Clicked campus button on the bottom of left navigation menu");
